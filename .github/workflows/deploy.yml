@@ -3,7 +3,7 @@ name: Build and Deploy .NET App
 on:
   push:
     branches:
-      - main   # triggers after PR merge
+      - master   # triggers after PR merge
 
 jobs:
   build-and-deploy:
@@ -19,15 +19,19 @@ jobs:
         dotnet-version: '8.0.x'
 
     - name: Restore
-      run: dotnet restore
+      run: dotnet restore WebAPI_WebApp.sln
 
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build WebAPI_WebApp.sln --configuration Release --no-restore
+
+    - name: Test
+      run: dotnet test WebAPI_WebApp.sln --configuration Release --no-build
 
     - name: Publish
-      run: dotnet publish -c Release -o ./publish
+      run: dotnet publish WebAPI_WebApp/WebAPI_WebApp.csproj -c Release -o ./publish --no-build
 
     - name: Deploy to Azure
+      if: success()
       uses: azure/webapps-deploy@v2
       with:
         app-name: MyWebAPI1   # 🔴 replace this
