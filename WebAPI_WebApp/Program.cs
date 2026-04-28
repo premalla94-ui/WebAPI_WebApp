@@ -58,6 +58,7 @@ app.MapGet("/config", (IConfiguration config) =>
     return $"App: {appName} | Environment: {env}";
 });
 
+
 // ✅ Phase 7 - Key Vault test
 app.MapGet("/db", (IConfiguration config) =>
 {
