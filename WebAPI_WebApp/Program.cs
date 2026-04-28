@@ -1,6 +1,8 @@
 ﻿using Azure.Identity;
+using Azure.Storage.Blobs;
 using Serilog;
 using Serilog.Sinks.ApplicationInsights;
+using WebAPI_WebApp.BlobStorage;
 var builder = WebApplication.CreateBuilder(args);
 
 // ✅ Add Key Vault (works for both local + Azure)
@@ -24,6 +26,11 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 builder.Host.UseSerilog();
+
+builder.Services.Configure<BlobStorageOptions>(
+    builder.Configuration.GetSection(BlobStorageOptions.SectionName));
+builder.Services.AddSingleton<BlobStorageService>();
+    
 
 
 
