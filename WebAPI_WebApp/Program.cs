@@ -62,7 +62,7 @@ app.MapGet("/config", (IConfiguration config) =>
 // ✅ Phase 7 - Key Vault test
 app.MapGet("/db", (IConfiguration config) =>
 {
-    var conn = config.GetConnectionString("Default") ?? "NOT FOUND";
+    var conn = config.GetConnectionString("Default") ?? "NOT FOUND12";
     return $"Connection: {conn}";
 });
 
